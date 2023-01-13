@@ -1,0 +1,25 @@
+{
+  "name": "datefiddler",
+  "version": "1.0",
+  "main": "datefiddler.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KooiInc/datefiddler.git"
+  },
+  "keywords": [
+    "datetime",
+    "js",
+    "utility",
+    "arithmetic"
+  ],
+  "scripts": {
+    "test": "node basictests.js"
+  },
+  "author": "KooiInc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KooiInc/datefiddler/issues"
+  },
+  "homepage": "https://github.com/KooiInc/datefiddler#readme"
+}
