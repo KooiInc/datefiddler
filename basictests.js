@@ -20,10 +20,10 @@ function runTests() {
     cnt += 1;
     try {
       testFn2Run(value instanceof Function ? value() : value, expected, okLine);
-      log(`   test ${okLine} OK`);
+      log(`   😀 test ${okLine} OK`);
     } catch (err) {
       errors = true;
-      log(`   ERROR for test ${err.message}${getLine(err)}   expected: ${err.expected},\n     actual: ${err.actual}\n`);
+      log(`   🤐 ERROR for test ${err.message}${getLine(err)}   expected: ${err.expected},\n     actual: ${err.actual}\n`);
     }
   };
 
@@ -40,7 +40,7 @@ function runTests() {
 
   dsr.set(new Date(2000, 1, 1));
   log(`\ndsr.set(new Date(2000, 1 , 1) => ${dsr.value}`);
-  runTest(dsr.ISO, new Date(2000, 1, 1).toISOString(), `dsr.set [date]`);
+  runTest(dsr.date, new Date(2000, 1, 1), `dsr.set [date]`, deepStrictEqual);
   runTest(dsr.value, formatter(new Date(2000, 1, 1)), `dsr.set [value]`);
 
   dsr.add(`2 days`);
@@ -56,7 +56,7 @@ function runTests() {
   newDate.setDate(newDate.getDate() + 7);
   wd.nextWeek();
   log(`\nwd.nextWeek() => ${wd.value}`);
-  runTest(wd.ISO, newDate.toISOString(), `wd.nextWeek [date]`);
+  runTest(wd.date, newDate, `wd.nextWeek [date]`, deepStrictEqual);
   runTest(wd.value, formatter(newDate), `wd.nextWeek [value]`);
 
   newDate = new Date(wd.date);
@@ -64,7 +64,7 @@ function runTests() {
   wd.previousMonth().previousMonth();
   log(`\n--- chain extension methods ---`);
   log(`\nwd.previousMonth().previousMonth() => ${wd.value}`);
-  runTest(wd.ISO, newDate.toISOString(), `wd.previousMonth (2x) (double) [date]`);
+  runTest(wd.date, newDate, `wd.previousMonth (2x) (double) [date]`, deepStrictEqual);
   runTest(wd.value, formatter(newDate), `wd.previousMonth (2x) (double) [value]`);
 
   log(`\n--- chain extension methods and "native" methods ---`);
@@ -74,14 +74,14 @@ function runTests() {
   newDate.setFullYear(newDate.getFullYear() + 3);
   wd.yesterday().add(`3 years`);
   log(`\nwd.yesterday().add(\`3 years\`) => ${wd.value}`);
-  runTest(wd.ISO, newDate.toISOString(), `wd.yesterday.add [date]`);
+  runTest(wd.date, newDate, `wd.yesterday.add [date]`, deepStrictEqual);
   runTest(wd.value, formatter(newDate), `wd.yesterday.add [value]`);
 
   log(`\n--- reset instance date to its initial date ---`);
   log(`\nwd.value => current value ${wd.value}`)
   wd.reset();
   log(`wd.reset().value => new value ${wd.value}`);
-  runTest(wd.ISO, wd.initial.toISOString(), `wd.reset (initial) [date]`);
+  runTest(wd.date, wd.initial, `wd.reset (initial) [date]`, deepStrictEqual);
   runTest(wd.value, formatter(wd.initial), `wd.reset (initial) [value]`);
 
   log(`\n--- reset date *and* initial date to current instance date value ---`);
@@ -90,7 +90,7 @@ function runTests() {
   wd.update2Current();
   log(`\nwd.set(new Date(2021, 7, 27)); => ${wd.value}`);
   log(`wd.update2Current() => ${wd.value}`);
-  runTest(wd.ISO, wd.initial.toISOString(), `wd.reset (all) [date]`);
+  runTest(wd.date, wd.initial, `wd.reset (all) [date]`, deepStrictEqual);
   runTest(wd.value, formatter(wd.initial), `wd.reset (all) [value]`);
 
   log(`\n--- reset all using [instance].set ---`);
@@ -98,7 +98,7 @@ function runTests() {
   const ddr = new Date();
   dsr.set(ddr, true);
   log(`\ndsr.set(new Date(), true) => ${dsr.value}`);
-  runTest(dsr.ISO, ddr.toISOString(), `dsr.set (all) [date]`);
+  runTest(dsr.date, ddr, `dsr.set (all) [date]`, deepStrictEqual);
   runTest(dsr.value, formatter(dsr), `dsr.set (all) [value]`);
 
   log(`\n-- .add parameters ---`);
@@ -132,7 +132,7 @@ function runTests() {
   const test = xDate(new Date(1900, 0, 1), "this is not a function");
   log(`\nconst test = xDate(new Date(1900, 0, 1), "this is not a function"); 
      => ${test.value}`);
-  runTest(test.value, new Date(1900, 0, 1), `instantiation bad formatter`, deepStrictEqual);
+  runTest(test.date, new Date(1900, 0, 1), `instantiation bad formatter`, deepStrictEqual);
 
   const formatterTest = test.clone(d => d.toLocaleString(`de-DE`));
   log(`\nconst formatterTest = test.clone(d => d.toLocaleString("de-DE"))); => ${formatterTest.value}`);
