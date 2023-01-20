@@ -1,7 +1,6 @@
 import factory from "./datefiddler.js";
 import {strictEqual, deepStrictEqual, doesNotThrow} from 'node:assert/strict';
 runTests();
-process.exit(0);
 
 function runTests() {
   const xDate = factory(exts);
@@ -126,8 +125,10 @@ function runTests() {
   runTest(`${dsr}`, formatter(dsr), `dsr toString (formatter in instance)`);
 
   const tsInstance = xDate();
+  const now = new Date();
   log(`\n\`\${xDate()}\ => value: ${tsInstance}`);
   runTest(`${tsInstance}`, formatter(tsInstance), `toString no instance formatter`);
+  runTest(tsInstance.date, now, `instantiate without parameter [date] equals current date`, deepStrictEqual);
 
   const test = xDate(new Date(1900, 0, 1), "this is not a function");
   log(`\nconst test = xDate(new Date(1900, 0, 1), "this is not a function"); 
@@ -143,6 +144,7 @@ function runTests() {
 
   log(errors ? `\nAll done, but there were errors ...\n` : `\nAll ${cnt} tests are ok!\n`);
   logIt(...logs);
+  process.exit(errors ? 1 : 0);
 }
 
 function exts(instance) {
