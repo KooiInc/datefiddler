@@ -149,7 +149,7 @@ function demo() {
     are also available for each instance.</div>
     
     <div>All instance methods including eventual extension methods are
-    chainable (so, the result of any instgance method call returns the instance and 
+    chainable (so, the result of any instance method call returns the instance and 
     therewith the aforementioned methods).</div>`,
     `const formatter1 = function(d) { return d[formatDT("WD d MM yyyy hh:mmi:ss dp", "l:en")]; };
   const myDate = xDate( new Date(), formatter1 );
